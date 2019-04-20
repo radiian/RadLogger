@@ -3,7 +3,7 @@
 int main(){
 	
 	//This is a working example of a post request to an influxdb server. It does work!
-	std::string requestdata = "POST /write?db=testdb HTTP/1.1\r\nHost:10.0.0.118:8086\r\nContent-Length: 19\r\nContent-Type: x-www-form-urlencoded\r\n\r\ntestpoint value=6969\n";
+	std::string requestdata = "POST /write?db=testdb HTTP/1.1\r\nHost:10.0.0.118:8086\r\nContent-Length: 36\r\nContent-Type: x-www-form-urlencoded\r\n\r\ntestpoint,location=remote value=6969\n";
 	std::cout << "RadLogger\n";
 
 	Sock testsock = Sock(tcp, "10.0.0.118", 8086);
