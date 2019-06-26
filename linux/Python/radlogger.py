@@ -2,7 +2,7 @@ import requests, serial, time
 
 URL = "http://10.0.0.118:8086/write?db=radlog"
 
-SerialDevice = "COM8"
+SerialDevice = "/dev/ttyUSB0"
 
 port = serial.Serial(SerialDevice, 115200)
 
@@ -17,9 +17,13 @@ data_base = "rad_data,location=" + location + " value="
 
 while True:
 	port.write(b'<GETCPM>>')
-	dat = port.read(2)
-	cpm = dat[0] << 8
-	cpm |= dat[1]
+	raw = port.read(2)
+        
+        #The encoding safe way to do this apparently
+        cpm = int(raw[0].encode('hex'), 16) << 8
+        cpm |= int(raw[1].encode('hex'), 16)
+	#cpm = dat[0] << 8
+	#cpm |= dat[1]
 	print(str(cpm))
 	
 	payload  = data_base + str(cpm)
